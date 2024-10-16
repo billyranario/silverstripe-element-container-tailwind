@@ -1,0 +1,34 @@
+{
+    "name": "thehustle/silverstripe-element-container-tailwind",
+    "description": "A SilverStripe module providing container and column blocks using Tailwind.",
+    "type": "silverstripe-vendormodule",
+    "require": {
+        "php": "^7.1 || ^8.0",
+        "silverstripe/cms": "^4 || ^5",
+        "silverstripe/framework": "^4 || ^5",
+        "dnadesign/silverstripe-elemental": "^4 || ^5",
+        "dnadesign/silverstripe-elemental-list": "^2.0@beta"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5 || ^9"
+    },
+    "autoload": {
+        "psr-4": {
+            "TheHustle\\": "src/"
+        }
+    },
+    "extra": {
+        "expose": [
+            "templates"
+        ]
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Billy Joel Ranario",
+            "email": "billyranario@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
