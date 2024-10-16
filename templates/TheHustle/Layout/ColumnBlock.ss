@@ -1,4 +1,4 @@
-<div class="hero-banner--container {{ $CSSClass }} {{ $getTailwindColumnClass }}">
+<div class="$CSSClass $getTailwindColumnClass">
     <% with $Elements %>
         $Me
     <% end_with %>
