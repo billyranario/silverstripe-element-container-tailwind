@@ -6,10 +6,12 @@ use DNADesign\Elemental\Extensions\ElementalAreasExtension;
 use DNADesign\Elemental\Models\BaseElement;
 use DNADesign\Elemental\Models\ElementalArea;
 use SilverStripe\ORM\FieldType\DBBoolean;
+use SilverStripe\ORM\FieldType\DBInt;
 use SilverStripe\ORM\FieldType\DBVarchar;
 use SilverStripe\Assets\Image;
 use SilverStripe\Forms\TextField;
-use SilverStripe\Forms\CheckboxField;
+use SilverStripe\Forms\DropdownField;
+use SilverStripe\Forms\NumericField;
 
 class ContainerBlock extends BaseElement
 {
@@ -23,6 +25,7 @@ class ContainerBlock extends BaseElement
     private static $db = [
         'CSSClass' => DBVarchar::class,
         'NoGutters' => DBBoolean::class,
+        'Columns' => DBInt::class
     ];
 
     private static $has_one = [
@@ -88,28 +91,26 @@ class ContainerBlock extends BaseElement
         $noGuttersField = CheckboxField::create('NoGutters', 'Remove Gutters (Padding)')
             ->setDescription('Removes padding from the container when checked.');
 
+        $columnsField = NumericField::create('Columns', 'Number of Columns')
+            ->setDescription('Define the number of columns for this container')
+            ->setMin(1)
+            ->setMax(12)
+            ->setValue(1); // Default to 1 column
+
         $fields->addFieldsToTab('Root.Main', [
             $cssClassField,
-            $noGuttersField
+            $noGuttersField,
+            $columnsField
         ]);
 
         return $fields;
     }
 
-    public function getContainerClasses()
+    public function getGridClasses()
     {
-        $classes = ['relative', 'w-full'];
+        $columns = $this->Columns ?: 1;  // Default to 1 if not set
+        $gutterClass = $this->NoGutters ? 'gap-0' : 'gap-4';
 
-        if ($this->NoGutters) {
-            $classes[] = 'p-0';
-        } else {
-            $classes[] = 'px-4';  // Default padding if gutters are enabled
-        }
-
-        if ($this->CSSClass) {
-            $classes[] = $this->CSSClass;
-        }
-
-        return implode(' ', $classes);
+        return "grid grid-cols-1 md:grid-cols-{$columns} {$gutterClass}";
     }
 }
